@@ -15,10 +15,11 @@ def getImg(html):
     for imgurl in imglist:
         strinfo = re.compile('thumb')
         imgurl = strinfo.sub('large',imgurl)
-       	print imgurl
-        urllib.urlretrieve(imgurl,'%s.jpg' % x)
+        print imgurl
+        local = 'E://myimage//'
+        urllib.urlretrieve(imgurl,local+'%s.jpg' % x)
         x+=1
 
-html = getHtml("http://www.douban.com/photos/album/82457678/")
+html = getHtml("http://www.douban.com/photos/album/63888587/")
  
 print getImg(html)
