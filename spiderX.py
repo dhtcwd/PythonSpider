@@ -6,7 +6,8 @@
 #   作者：Will  
 #   日期：2014-07-17  
 #   语言：Python 2.7  
-#   功能：将相册中照片全部抓下来（有大图优先抓大图——比0.1版本的改进)  
+#   功能：将相册中照片全部抓下来  
+#   改进：优先抓取大图；用户只需输入相册编号，自动计算所有页
 #---------------------------------------  
 
 import urllib
@@ -58,8 +59,6 @@ def getImg(html):
         largere = re.compile(reg_large)
         largelist = re.findall(largere,html)
         if len(largelist)>0:
-            print len(largelist)
-            print "There's a large version..."
             strinfo = re.compile('photo/photo')
             imgurl = strinfo.sub('photo/large',imgurl)
         print "picture url is %s" % imgurl
@@ -71,12 +70,27 @@ def getImg(html):
         time.sleep(random.randint(0, 5))
 
 
+def getIndex(html):
+    reg_index = r'<span class="count">\((.+)\)</span>'
+    indexre = re.compile(reg_index)
+    indexlist = re.findall(indexre,html)
+    indexnum = indexlist[0]
+    num = filter(str.isdigit,indexnum)
+    return num
 
 albumId = raw_input('please enter the albumId: ')
-paper = int(raw_input('please enter the num of paper: '))
-for x in range(paper):
+albumUrl = "http://www.douban.com/photos/album/"+albumId
+print "Now we start at %r" % albumUrl
+html = getHtml(albumUrl)
+getPicHtml(html);
+#one page include 18 pic max
+total = int(getIndex(html))
+index = total/18
+for x in range(1,index+1):
     index = str(x * 18)
     albumUrl = "http://www.douban.com/photos/album/"+albumId+"/?start="+index
-    print "Now we start at %r" % albumUrl
+    print "Now we goon to the next page"
+    print "Now we come to %r" % albumUrl
     html = getHtml(albumUrl)
     getPicHtml(html);
+print "%d pictures done,enjoy yourslef." % total
