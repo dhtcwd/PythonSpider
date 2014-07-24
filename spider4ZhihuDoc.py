@@ -72,36 +72,23 @@ def getHtml(url):
     html = response.read()
     return html
 
-#    <a class="item active"
-
-def getIndex(html):
-#   <span><a href="?page=7">7</a></span>
-#   reg_index = r'<span>...</span><span><a href=.*>(.+)</a></span>'
-    reg_index = r'<span>...</span>.*<span><a href=.*>(.+)</a></span>'
-    indexre = re.compile(reg_index)
-    indexlist = re.findall(indexre,html)
-    print len(indexlist)
-    if len(indexlist)>0:
-        indexnum = indexlist[0]
-        num = filter(str.isdigit,indexnum)
-        return num
-    else:
-        return 0
     
 def getAnswerHtml(html):
-    reg = r"<h2><a class.*?href=\"(\/question\/.*\/answer\/\d*)"
+#<div class=" zm-editable-content clearfix"></div>
+    reg = r'<div class=\" zm-editable-content clearfix\">.*</div>'
     answerRe = re.compile(reg)
     answerList = re.findall(answerRe,html)
+    print answerList
     for a in answerList:
-        answerHtml = "http://www.zhihu.com" +a
-        
+        print a
     
 userName = raw_input('please enter the userName: ')
-answerUrl = "http://www.zhihu.com/people/"+userName+"/answers"
-html_pageOne = getHtml(answerUrl)
-#getAnswerHtml(html_pageOne)
-total = int(getIndex(html_pageOne))
-print total
+index = int(raw_input('please enter the index: '))
+for x in range(1,index+1):
+    answerUrl = "http://www.zhihu.com/people/"+userName+"/answers?page=%d" % x
+    html_page = getHtml(answerUrl)
+    getAnswerHtml(html_page)
+    time.sleep(1000)
 
 
 
