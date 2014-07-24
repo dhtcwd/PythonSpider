@@ -2,7 +2,7 @@
 import re
 
 def getIndex(html):
-    reg_index = r'<span class="count">\((.+)\)</span>'
+    reg_index = r'<span>...</span><span><a href=.*>(.+)</a></span>'
     indexre = re.compile(reg_index)
     indexlist = re.findall(indexre,html)
     indexnum = indexlist[0]
@@ -10,8 +10,7 @@ def getIndex(html):
     return num
     
 
-html = "<span class=\"count\">(共52张)</span></div></div><div class=\"aside\">"
+html = "<span>...</span><span><a href='?page=7'>7</a></span>"
 html = unicode(html, "utf8").encode("gbk")
 index = int(getIndex(html))
-for x in range(1,index):#1-51
-    print x
+print index 
