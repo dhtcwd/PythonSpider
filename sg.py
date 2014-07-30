@@ -44,7 +44,7 @@ class ElearningHacker:
             entoStudyUrl = 'http://61.177.60.86:8000/elearning/stuMyStudy.do?method=entoStudy&courseId='+courseId+'&assignId='+assignId+'&type=3&cate=1'
             request = urllib2.Request(entoStudyUrl)
             response = urllib2.urlopen(request)
-            #匹配可以完成的课程
+        #结束学习
         tobeFinishUrl = 'http://61.177.60.86:8000/elearning/stuMyStudy.do?method=stuMyStudy&type=studying&page=1&pageSize=100'
         request_fin = urllib2.Request(tobeFinishUrl)
         response_fin = urllib2.urlopen(request_fin)
