@@ -75,10 +75,9 @@ def getHtml(url):
     
 def getAnswerHtml(html):
 #<div class=" zm-editable-content clearfix"></div>
-    reg = r'<div class=\" zm-editable-content clearfix\">.*</div>'
+    reg = r'<a class=\"question_link\" href=\"(.*)\">'
     answerRe = re.compile(reg)
     answerList = re.findall(answerRe,html)
-    print answerList
     for a in answerList:
         print a
     
@@ -88,7 +87,6 @@ for x in range(1,index+1):
     answerUrl = "http://www.zhihu.com/people/"+userName+"/answers?page=%d" % x
     html_page = getHtml(answerUrl)
     getAnswerHtml(html_page)
-    time.sleep(1000)
 
 
 
